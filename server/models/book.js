@@ -1,7 +1,7 @@
-// Vendor imports
+// Vendor imports //
 const mongoose = require("mongoose");
 
-// Schema -> Model
+// Schema -> Model //
 const bookSchema = mongoose.Schema(
   {
     name: {
