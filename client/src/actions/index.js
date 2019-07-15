@@ -1,5 +1,20 @@
 import axios from "axios";
 
+// USER ACTIONS
+
+export function loginUser({ email, password }) {
+  const request = axios
+    .post("/api/login", { email, password })
+    .then(response => response.data);
+
+  return {
+    type: "USER_LOGIN",
+    payload: request
+  };
+}
+
+// BOOKS ACTIONS
+
 export function getBooks(limit = 10, start = 0, order = "asc", list = "") {
   const request = axios
     .get(`/api/books?limit=${limit}&skip=${start}&order=${order}`)
@@ -38,6 +53,8 @@ export function getBookWithReviewer(id) {
     });
   };
 }
+
+// USER AND BOOK ACTIONS
 
 export function clearBookWithReviewer() {
   return {
