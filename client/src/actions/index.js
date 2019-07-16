@@ -23,6 +23,22 @@ export function auth() {
 
 // BOOKS ACTIONS
 
+export function addBook(book) {
+  const request = axios.post("/api/book", book).then(response => response.data);
+
+  return {
+    type: "ADD_BOOK",
+    payload: request
+  };
+}
+
+export function clearNewBook() {
+  return {
+    type: "CLEAR_NEWBOOK",
+    payload: {}
+  };
+}
+
 export function getBooks(limit = 10, start = 0, order = "asc", list = "") {
   const request = axios
     .get(`/api/books?limit=${limit}&skip=${start}&order=${order}`)
