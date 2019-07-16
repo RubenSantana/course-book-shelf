@@ -23,6 +23,9 @@ const { auth } = require("./middleware/auth");
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// Build Middleware //
+app.use(express.static("client/build"));
+
 // ********************** User Routes ********************** //
 
 // GET //
@@ -175,6 +178,14 @@ app.delete("/api/delete_book", (req, res) => {
 });
 
 // ********************************************************* //
+
+// Build //
+if (process.env.NODE_ENV === "production") {
+  const path = require("path");
+  app.get("/*", (req, res) => {
+    res.sendfile(path.resolve(__dirname, "../client", "build", "index.html"));
+  });
+}
 
 // Server run //
 const port = process.env.PORT || 3001;
