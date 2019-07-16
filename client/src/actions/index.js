@@ -13,6 +13,14 @@ export function loginUser({ email, password }) {
   };
 }
 
+export function auth() {
+  const request = axios.get("/api/auth").then(response => response.data);
+  return {
+    type: "USER_AUTH",
+    payload: request
+  };
+}
+
 // BOOKS ACTIONS
 
 export function getBooks(limit = 10, start = 0, order = "asc", list = "") {
