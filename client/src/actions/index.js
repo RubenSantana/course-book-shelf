@@ -6,7 +6,6 @@ export function loginUser({ email, password }) {
   const request = axios
     .post("/api/login", { email, password })
     .then(response => response.data);
-
   return {
     type: "USER_LOGIN",
     payload: request
@@ -21,11 +20,38 @@ export function auth() {
   };
 }
 
+export function getUsers() {
+  const request = axios.get("/api/users").then(response => response.data);
+  return {
+    type: "GET_USERS",
+    payload: request
+  };
+}
+
+export function userRegister(user, userList) {
+  const request = axios.post(`/api/register`, user);
+
+  return dispatch => {
+    request.then(({ data }) => {
+      let users = data.success ? [...userList, data.user] : userList;
+
+      let response = {
+        success: data.success,
+        users
+      };
+
+      dispatch({
+        type: "USER_REGISTER",
+        payload: response
+      });
+    });
+  };
+}
+
 // BOOKS ACTIONS
 
 export function addBook(book) {
   const request = axios.post("/api/book", book).then(response => response.data);
-
   return {
     type: "ADD_BOOK",
     payload: request
@@ -49,7 +75,6 @@ export function getBooks(limit = 10, start = 0, order = "asc", list = "") {
         return response.data;
       }
     });
-
   return {
     type: "GET_BOOKS",
     payload: request
@@ -58,7 +83,6 @@ export function getBooks(limit = 10, start = 0, order = "asc", list = "") {
 
 export function getBookWithReviewer(id) {
   const request = axios.get(`/api/getBook?id=${id}`);
-
   return dispatch => {
     request.then(({ data }) => {
       let book = data;
